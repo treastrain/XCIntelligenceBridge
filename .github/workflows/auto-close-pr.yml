@@ -1,0 +1,22 @@
+# Referenced from github/CopilotForXcode/.github/workflows/auto-close-pr.yml
+
+name: Auto-close the pull request
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+jobs:
+  auto-close:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - run: |
+          gh pr close ${{ github.event.pull_request.number }} --comment \
+          "At the moment I'm not accepting contributions to the repository. Feedback for XCIntelligenceBridge can be sent to @treastrain on social networks. Thank you.
+
+          このリポジトリは、現時点ではコントリビュートを受け付けておりません。フィードバックは SNS で @treastrain へお寄せください。"
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
